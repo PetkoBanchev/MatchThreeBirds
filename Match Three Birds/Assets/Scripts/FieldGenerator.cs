@@ -6,6 +6,10 @@ public class FieldGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private Transform playingFieldHolder;
+    
+    [SerializeField] private GameObject birdPrefab;
+    [SerializeField] private Transform birdsHolder;
+
     private Dictionary<Vector2, Cell> cellDictionary;
 
     [SerializeField] private int fieldX;
@@ -17,6 +21,7 @@ public class FieldGenerator : MonoBehaviour
     void Start()
     {
         GenerateField();
+        PopulateField();
     }
 
     [ContextMenu("Generate Field")]
@@ -43,5 +48,13 @@ public class FieldGenerator : MonoBehaviour
     {
         foreach (Transform child in playingFieldHolder)
             Destroy(child.gameObject);
+    }
+
+    private void PopulateField()
+    {
+        foreach(Cell cell in cellDictionary.Values)
+        {
+            var bird = Instantiate(birdPrefab, cell.transform.position, Quaternion.identity, birdsHolder);
+        }
     }
 }
